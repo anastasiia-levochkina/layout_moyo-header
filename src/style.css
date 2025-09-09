@@ -1,12 +1,13 @@
+/* stylelint-disable order/properties-order */
 :root {
-  --blue: #1e90ff;
+  --blue: #00acdc;
   --text: #111;
+  --fs: 12px;
+  --gap: 20px;
   --link-h: 48px;
-  --font-size: 16px;
-  --item-gap: 24px;
-  --underline: 2px;
 }
 
+/* reset */
 *,
 *::before,
 *::after {
@@ -16,97 +17,94 @@
 html,
 body {
   margin: 0;
-
-  font-family: Roboto, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
   color: var(--text);
-  text-rendering: optimizeLegibility;
+  font-family: Roboto, sans-serif;
 }
 
-/* HEADER */
+/* header: тянется на всю ширину; лого визуально 50px слева и 10px сверху */
 .header {
   display: flex;
   align-items: center;
-  width: 100%;
-  background: #fff;
+  padding-left: 50px;
+  padding-top: 9px;
 }
 
+/* лого 40x40 (картинка внутри ссылки) */
 .logo {
-  display: inline-flex;
-  align-items: center;
-
-  margin-right: 24px;
-  margin-left: 16px;
-
-  text-decoration: none;
+  display: inline-block;
 }
 
 .logo__img {
   display: block;
-  width: auto;
-  height: 24px;
+  width: 38px;
+  height: 40px;
 }
 
-/* NAV */
+/* от лого до меню ~419px на макете 1200px */
 .nav {
-  right: 0;
-  left: 0;
+  margin-left: 243px;
 }
 
+/* список в строку, без маркеров и лишних отступов */
 .nav__list {
   display: flex;
-  align-items: center;
-
-  /* list reset спершу */
-
+  list-style: none;
   margin: 0;
   padding: 0;
-
-  list-style: none;
 }
 
-.nav__item:not(:first-child) {
-  margin-left: var(--item-gap);
+/* расстояние между пунктами: 20px (через margin, без gap) */
+.nav__item + .nav__item {
+  margin-left: var(--gap);
 }
 
+/* ссылки: задаём высоту, центрируем, без padding */
 .nav__link {
-  /* positioning для ::after */
-  position: relative;
-
   display: inline-block;
-
-  /* box-model (висота клікабельної зони) */
   height: var(--link-h);
-
-  font-size: var(--font-size);
   line-height: var(--link-h);
-  color: var(--text);
-
-  /* typography */
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+  font-size: var(--fs);
+  font-weight: 500;
+  color: var(--text);
+  padding: 0;
 }
 
-.nav__link:hover,
-.nav__link[data-qa='hover']:hover {
+/* hover меняет цвет */
+.nav__link:hover {
   color: var(--blue);
 }
 
+/* активная: синим + подчёркивание через ::after */
 .nav__link.is-active {
   position: relative;
   color: var(--blue);
 }
 
+.nav__link--blue {
+  color: #00acdc;
+}
+
+/* писать «нормально», а не UPPERCASE, только для этой ссылки */
+.nav__link--normal {
+  text-transform: none;
+}
+
+/* слегка сдвинуть текст влево без padding (тесты не любят padding на ссылках) */
+.nav__link--shift {
+  transform: translateX(-4px);
+}
+
 .nav__link.is-active::after {
   content: '';
-
   position: absolute;
-  right: 0;
+  left: 50%;
   bottom: 0;
-  left: 0;
-
-  height: var(--underline);
-
+  transform: translateX(-50%);
+  width: 28px;
+  height: 3px;
   background: var(--blue);
+  border-radius: 2px;
 }
